@@ -1,4 +1,4 @@
-package com.javacore;
+package com.javacore.package4_7;
 
 import static java.lang.System.out; // 静态导入
 
@@ -11,7 +11,7 @@ import static java.lang.System.out; // 静态导入
  */
 public class JavaCore4_6 {
     public static void main(String[] args) {
-        // Employee定义在JavaCore4_2.java中，与当前类同一个包下
+        // Employee定义在当前包中 -- com.javacore.package4_7
         var harry = new Employee("汤姆克鲁斯", 5000, 1989, 10, 1);
         harry.raiseSalary(5);
         out.println("name=" + harry.getName() + ",salary=" + harry.getSalary());
