@@ -33,6 +33,10 @@ public class Employee {
         return hireDay;
     }
 
+    public void raiseSalary(double byPercent) {
+        salary += salary * byPercent / 100;
+    }
+
     public boolean equals(Object otherObject) {
         // System.out.println("call equals~");
         if (this == otherObject) return true;
