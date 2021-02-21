@@ -1,6 +1,8 @@
 package com.javacore;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Scanner;
 
@@ -29,8 +31,13 @@ public class JavaCore5_14 {
         if (modifiers.length() > 0) System.out.print(modifiers + " ");
         System.out.print("class " + name); // 类的名字
         if (supercl != null && supercl != Object.class) System.out.print(" extends " + supercl.getName()); // 父类
-        System.out.print("\n\n");
+        System.out.print("\n{\n");
         printConstructors(cl);
+        System.out.println();
+        printMethods(cl);
+        System.out.println();
+        printFields(cl);
+        System.out.println("}");
     }
 
     /**
@@ -39,7 +46,7 @@ public class JavaCore5_14 {
      * @param cl 一个类对象
      */
     public static void printConstructors(Class cl) {
-        Constructor[] constructors = cl.getConstructors();
+        Constructor[] constructors = cl.getDeclaredConstructors();
         for (Constructor c : constructors) {
             String name = c.getName();
             System.out.print("    ");
@@ -53,6 +60,47 @@ public class JavaCore5_14 {
                 System.out.print(paramTypes[j].getName());
             }
             System.out.println(");");
+        }
+    }
+
+    /**
+     * 打印一个类的所有方法
+     *
+     * @param cl 一个类对象
+     */
+    public static void printMethods(Class cl) {
+        Method[] methods = cl.getDeclaredMethods();
+        for (Method m : methods) {
+            Class retType = m.getReturnType(); // 返回值类型
+            String name = m.getName(); // 方法名
+            System.out.print("    ");
+            String modifiers = Modifier.toString(m.getModifiers()); // 修饰符
+            if (modifiers.length() > 0) System.out.print(modifiers + " ");
+            System.out.print(retType.getName() + " " + name + "(");
+            Class[] paramTypes = m.getParameterTypes(); // 参数类型
+            for (int i = 0; i < paramTypes.length; i++) {
+                if (i > 0) System.out.print(", ");
+                System.out.print(paramTypes[i].getName());
+            }
+            System.out.println(");");
+        }
+    }
+
+    /**
+     * 打印一个类的所有字段
+     *
+     * @param cl 一个类对象
+     */
+    public static void printFields(Class cl) {
+        // Field[] fields = cl.getFields(); // 只能获取到公共字段
+        Field[] fields = cl.getDeclaredFields();
+        for (Field f : fields) {
+            Class type = f.getType(); // 字段类型
+            String name = f.getName(); // 字段名字
+            System.out.print("    ");
+            String modifiers = Modifier.toString(f.getModifiers()); // 字段修饰符
+            if (modifiers.length() > 0) System.out.print(modifiers + " ");
+            System.out.println(type.getName() + " " + name + ";");
         }
     }
 }
